@@ -1,10 +1,24 @@
 <?php
-require_once 'db_connection.php';
-$id = $_GET['id'];
-$stmt = $pdo->prepare('SELECT * FROM Books.books b LEFT JOIN book_authors ba ON ba.book_id = b.id
-LEFT JOIN authors a ON ba.author_id = a.id WHERE b.id = :id');
-$stmt->execute(['id' => $id]);
+$host = '127.0.0.1';
+$db   = 'Books';
+$user = 'root';
+$pass = '';
+$charset = 'utf8mb4';
+$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+$options = [
+    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_EMULATE_PREPARES   => false,
+];
+try {
+     $pdo = new PDO($dsn, $user, $pass, $options);
+} catch (\PDOException $e) {
+     throw new \PDOException($e->getMessage(), (int)$e->getCode());
+}
+$stmt = $pdo->prepare('SELECT * FROM books WHERE id= :id');
+$stmt->execute(['id' => $_GET['id']]);
 $book = $stmt->fetch();
+var_dump($book);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,25 +26,12 @@ $book = $stmt->fetch();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title><?= $book['title']; ?></title>
+    <title><?php
+    echo $book['title'];
+    ?>
+    </title>
 </head>
 <body>
-<br>
-<?php echo $book['title']; ?>  
-<br>
-<?php echo $book['first_name']; ?> <?php echo $book['last_name']; ?>
-<?php echo $book['release_date']; ?>  
-<br>
-<?php echo $book['language']; ?>  
-<br>
-<?php echo $book['summary']; ?>  
-<br>
-<?php echo $book['price']; ?>
-<br> 
-<?php echo $book['pages']; ?> 
-<br> 
-echo "<body style='background-color:yellow'>";
-
-
+    
 </body>
 </html>
