@@ -1,0 +1,24 @@
+body {
+    background-image: url("taust.jpg");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.info {
+    display: flex;
+    background-color: white;
+    justify-content: space-around;
+    
+}
+
+.summary {
+    font-size: 60px;
+    text-align: ;
+    width: ;
+    float: ;
+    margin-right: ;
+    margin-top: ;
+
+}
